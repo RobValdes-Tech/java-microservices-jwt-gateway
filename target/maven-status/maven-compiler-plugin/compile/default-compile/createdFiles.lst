@@ -1,0 +1,4 @@
+com\example\gateway\LoginRequest.class
+com\example\gateway\GatewayApplication.class
+com\example\gateway\MockMicroservicesController.class
+com\example\gateway\config\SecurityConfig.class
