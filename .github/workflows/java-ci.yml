@@ -2,9 +2,9 @@ name: Java Spring Boot Continuous Integration
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ main ]
+    branches: [ "main" ]
 
 jobs:
   build-and-test:
@@ -22,13 +22,14 @@ jobs:
         cache: 'maven'
 
     - name: 3. Descargar Librerías de Maven y Compilar Código Fuente
-      run: mvn clean compile
+      run: ./mvnw clean compile
 
     - name: 4. Ejecutar Pruebas Unitarias Integradas
-      run: mvn test
+      run: ./mvnw test
 
     - name: 5. Empaquetar el archivo binario JAR de Producción
-      run: mvn package -DskipTests
+      run: ./mvnw package -DskipTests=true
 
     - name: 6. Construir Imagen Docker Reactiva
-      run: docker build -t RobValdes01/java-gateway:latest -f Dockerfile.java .
+      run: docker build -t RobValdes-Tech/java-gateway:latest -f Dockerfile.java .
+'@ | Out-File -Encoding utf8 java-ci.yml
