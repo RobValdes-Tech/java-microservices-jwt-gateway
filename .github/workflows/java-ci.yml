@@ -6,11 +6,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-# Forzar a que todos los comandos 'run' se ejecuten dentro de la carpeta 'gateway'
-defaults:
-  run:
-    working-directory: gateway
-
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -26,14 +21,17 @@ jobs:
         distribution: 'temurin'
         cache: 'maven'
 
-    - name: 3. Descargar Librerías de Maven y Compilar Código Fuente
+    - name: 3. Dar permisos de ejecución al Wrapper (Garantía Linux)
+      run: chmod +x mvnw
+
+    - name: 4. Descargar Librerías de Maven y Compilar Código Fuente
       run: ./mvnw clean compile
 
-    - name: 4. Ejecutar Pruebas Unitarias Integradas
+    - name: 5. Ejecutar Pruebas Unitarias Integradas
       run: ./mvnw test
 
-    - name: 5. Empaquetar el archivo binario JAR de Producción
+    - name: 6. Empaquetar el archivo binario JAR de Producción
       run: ./mvnw package -DskipTests=true
 
-    - name: 6. Construir Imagen Docker Reactiva
-      run: docker build -t RobValdes-Tech/java-gateway:latest -f Dockerfile.java .
+    - name: 7. Construir Imagen Docker
+      run: docker build -t robvaldes-tech/java-gateway:latest -f Dockerfile.java .
