@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [ "main" ]
 
+# Forzar a que todos los comandos 'run' se ejecuten dentro de la carpeta 'gateway'
+defaults:
+  run:
+    working-directory: gateway
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -32,4 +37,3 @@ jobs:
 
     - name: 6. Construir Imagen Docker Reactiva
       run: docker build -t RobValdes-Tech/java-gateway:latest -f Dockerfile.java .
-'@ | Out-File -Encoding utf8 java-ci.yml
